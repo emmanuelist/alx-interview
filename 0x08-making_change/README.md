@@ -59,10 +59,13 @@ def makeChange(coins, total):
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/yourusername/alx-interview.git
    ```
+
 2. Navigate to the project directory:
+
    ```bash
    cd alx-interview/0x08-making_change
    ```
@@ -91,12 +94,12 @@ print(makeChange([1256, 54, 48, 16, 102], 1453))  # Output: -1
 
 ## Algorithmic Approach
 
-### Greedy Algorithm
+### Greedy Algorithm (Approach 1)
 
 - **Strategy**: Always pick the largest denomination coin that does not exceed the remaining amount.
 - **Limitation**: May not always yield the optimal solution.
 
-### Dynamic Programming
+### Dynamic Programming Approach
 
 - **Strategy**: Use a table to store the minimum number of coins needed for all amounts up to the given total.
 - **Implementation**:
