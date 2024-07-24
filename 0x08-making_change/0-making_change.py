@@ -1,29 +1,35 @@
 #!/usr/bin/python3
 """
+Main file for testing
 """
 
 
-def makeChange(coins, total):
+def makeChange(coins, amount):
     """
-    This function calculates the minimum number of coins required to make a
-    given total amount using a given set of coin denominations.
-    It uses dynamic programming to efficiently solve this problem.
+    This function calculates the minimum number of coins required
+    to make a given amount of change.
+    It uses a greedy algorithm to find the optimal solution,
+    assuming that the coins are available in
+    infinite quantities and the denominations are distinct.
 
     Parameters:
-    coins (list of int): A list of coin denominations.
-    Each element in the list represents a coin denomination.
-    total (int): The total amount to be made using the given
-    coin denominations.
+    coins (List[int]): A list of integers representing the
+    available coin denominations.
+    amount (int): The target amount of change to be made.
 
     Returns:
-    int: The minimum number of coins required to make the total amount.
-    If it is not possible to make the total amount using the given coin
-    denominations, it returns -1.
+    int: The minimum number of coins required to make the given
+    amount of change. If it's not possible to make the
+    exact amount using the given coins, it returns -1.
     """
-    if total <= 0:
+    if amount < 1:
         return 0
-    dp = [0] + [float("inf")] * (total)
+    coins.sort(reverse=True)
+    count = 0
     for coin in coins:
-        for i in range(coin, total + 1):
-            dp[i] = min(dp[i], dp[i - coin] + 1)
-    return dp[-1] if dp[-1] != float("inf") else -1
+        if amount == 0:
+            break
+        num = amount // coin
+        amount -= num * coin
+        count += num
+    return count if amount == 0 else -1
