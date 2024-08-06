@@ -1,6 +1,17 @@
 #!/usr/bin/python3
 
 def canUnlockAll(boxes):
+    """
+    Determines if all the boxes can be opened.
+
+    Args:
+        boxes (list of list of int): A list where each element
+        is a list of keys contained in a box.
+        The index of the list represents the box number.
+
+    Returns:
+        bool: True if all boxes can be opened, False otherwise.
+    """
     # Number of boxes
     n = len(boxes)
 
