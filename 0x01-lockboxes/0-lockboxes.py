@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+"""
+Module to determine if all boxes can be unlocked.
+
+This module contains a single function `canUnlockAll` that checks if all boxes
+in a list of lists can be unlocked starting from the first box.
+"""
+
 
 def canUnlockAll(boxes):
     """
@@ -12,29 +19,24 @@ def canUnlockAll(boxes):
     Returns:
         bool: True if all boxes can be opened, False otherwise.
     """
-    # Number of boxes
-    n = len(boxes)
 
-    # Set to keep track of opened boxes
-    opened = set()
+    # Check if the input is valid
+    if not boxes or not isinstance(boxes, list):
+        return False
 
-    # Stack for DFS, starting with the first box
-    stack = [0]
+    # List to keep track of unlocked boxes, starting with the first box
+    unlocked = [0]
 
-    # While there are boxes to explore
-    while stack:
-        # Get the current box
-        current_box = stack.pop()
+    # Iterate through a copy of the list of unlocked boxes
+    for n in unlocked:
+        # Iterate through the keys in the current box
+        for key in boxes[n]:
+            # If the key opens a new box and the box number is valid
+            if key not in unlocked and key < len(boxes):
+                # Add the box to the list of unlocked boxes
+                unlocked.append(key)
 
-        # If the box is not already opened
-        if current_box not in opened:
-            # Mark it as opened
-            opened.add(current_box)
-
-            # Add all keys from this box to the stack
-            for key in boxes[current_box]:
-                if key < n and key not in opened:
-                    stack.append(key)
-
-    # Check if all boxes are opened
-    return len(opened) == n
+    # Check if the number of unlocked boxes equals the total number of boxes
+    if len(unlocked) == len(boxes):
+        return True
+    return False
