@@ -1,58 +1,50 @@
 #!/usr/bin/python3
-"""
-Prime Game Module
+"""0. Prime Game - Maria and Ben are playing a game"""
 
-This module provides functions to play a prime number game between Maria and Ben.
-"""
 
-def is_winner(x: int, nums: list) -> str:
+def isWinner(x, nums):
     """
-    Determines the winner of the prime game.
+    Determine the winner of the prime game between Maria and Ben.
+
+    The game is played in x rounds, and in each round, a number from the list nums is chosen.
+    A player wins a round if the sum of all prime numbers up to the chosen number is even.
+    The player who wins the most rounds wins the game.
 
     Args:
         x (int): The number of rounds.
         nums (list): A list of numbers.
 
     Returns:
-        str: The winner of the game, either "Ben" or "Maria". If it's a tie, returns None.
-
-    Raises:
-        ValueError: If x is less than or equal to 0, or if nums is None, or if x is not equal to the length of nums.
+        str: The winner of the game, either "Ben" or "Maria". If the game is a tie, returns None.
     """
-    if x <= 0:
-        raise ValueError("x must be greater than 0")
-    if nums is None:
-        raise ValueError("nums cannot be None")
+    if x <= 0 or nums is None:
+        return None
     if x != len(nums):
-        raise ValueError("x must be equal to the length of nums")
+        return None
 
     ben = 0
     maria = 0
 
-    max_num = max(nums)
-    a = [1] * (max_num + 1)
-    a[0] = a[1] = 0
-
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
     for i in range(2, len(a)):
         rm_multiples(a, i)
 
     for i in nums:
-        if sum(a[:i + 1]) % 2 == 0:
+        if sum(a[0:i + 1]) % 2 == 0:
             ben += 1
         else:
             maria += 1
-
     if ben > maria:
         return "Ben"
-    elif maria > ben:
+    if maria > ben:
         return "Maria"
-    else:
-        return None
+    return None
 
 
-def rm_multiples(ls: list, x: int) -> None:
+def rm_multiples(ls, x):
     """
-    Removes multiples of primes from the list.
+    Remove multiples of a prime number from a list.
 
     Args:
         ls (list): The list to modify.
@@ -61,5 +53,7 @@ def rm_multiples(ls: list, x: int) -> None:
     Returns:
         None
     """
-    for i in range(x, len(ls), x):
-        ls[i] = 0
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
